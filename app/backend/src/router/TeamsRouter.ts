@@ -10,4 +10,7 @@ const teamsRouter = Router();
 teamsRouter.get('/', (req: Request, res: Response, next: NextFunction) =>
   teamsController.getAll(req, res, next));
 
+teamsRouter.get('/:id', (req: Request, res: Response, next: NextFunction) =>
+  teamsController.getById(req, res, next));
+
 export default teamsRouter;
