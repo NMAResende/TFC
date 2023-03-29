@@ -1,9 +1,9 @@
 import * as Jwt from 'jsonwebtoken';
-import { IUserLogin } from '../interfaces/IUserLogin';
+import { IUsers } from '../interfaces/IUser';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
 
-export const createJWT = (payload: IUserLogin) => {
+export const createJWT = (payload: Omit<IUsers, 'password'>) => {
   console.log(payload);
   return Jwt.sign(payload, JWT_SECRET, { algorithm: 'HS256', expiresIn: '7d' });
 };
