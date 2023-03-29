@@ -10,7 +10,7 @@ const validadeEmail = (req: Request, res: Response, next: NextFunction) => {
   const valideEmail = regex.test(email);
 
   if (!valideEmail) {
-    return res.status(400).json({ message: 'Invalid email or password' });
+    return res.status(401).json({ message: 'Invalid email or password' });
   }
 
   next();

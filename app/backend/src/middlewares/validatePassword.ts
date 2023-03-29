@@ -8,7 +8,7 @@ const validadePassword = (req: Request, res: Response, next: NextFunction) => {
   }
 
   if (password.length < 6) {
-    return res.status(400).json({
+    return res.status(401).json({
       message: 'Invalid email or password' });
   }
 
