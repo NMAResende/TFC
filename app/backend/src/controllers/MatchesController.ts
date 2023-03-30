@@ -24,7 +24,7 @@ export default class TeamsController {
 
   public async finishMatches(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
 
       const finishMat = await this.matchesService.finishMatches(Number(id));
 
