@@ -19,6 +19,10 @@ describe('Testando a rota GET /teams', () => {
    */
   let chaiHttpResponse: Response;
 
+  afterEach(()=>{
+    (sinon.restore());
+  })
+
  // referencia: https://dev.to/matheusg18/testes-de-integracao-para-api-com-typescript-mocha-chai-e-sinon-3np9
   it('Testando getAll, onde deve retornar um array de times e enviar um status 200', async () => {
     before(async () => {
@@ -26,10 +30,6 @@ describe('Testando a rota GET /teams', () => {
         .stub(Teams, "findAll")
         .resolves(teamsMocks as Teams[]);
     });
-  
-    after(()=>{
-      (Teams.findAll as sinon.SinonStub).restore();
-    })
 
     chaiHttpResponse = await chai
        .request(app).get('/teams');
@@ -44,10 +44,6 @@ describe('Testando a rota GET /teams', () => {
         .stub(Teams, "findByPk")
         .resolves(teamsMocks[0] as Teams);
     });
-  
-    after(()=>{
-      (Teams.findByPk as sinon.SinonStub).restore();
-    })
     
     chaiHttpResponse = await chai
        .request(app).get('/teams/1');

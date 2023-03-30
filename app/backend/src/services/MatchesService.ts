@@ -38,13 +38,11 @@ export default class MacthesService {
     return inProgressMat;
   }
 
-  // public async finishMatches(id: number) {
-  //   const finishMat = await this.model.update(
-  //     {
-  //       inProgress: false,
-  //     },
-  //     { where: { id } },
-  //   );
-  //   return finishMat;
-  // }
+  public async finishMatches(id: number) {
+    const finishMat = await this.model.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+    return finishMat;
+  }
 }

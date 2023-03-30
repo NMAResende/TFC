@@ -22,15 +22,19 @@ export default class TeamsController {
     }
   }
 
-  // public async finishMatches(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id } = req.body;
+  public async finishMatches(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.body;
 
-  //     const inProgressMat = await this.matchesService.finishMatches(id);
+      const finishMat = await this.matchesService.finishMatches(Number(id));
 
-  //     return res.status(200).json(inProgressMat);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+      if (!finishMat) {
+        return res.status(401).json({ message: 'id not found' });
+      }
+
+      return res.status(200).json({ message: 'Finished' });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
