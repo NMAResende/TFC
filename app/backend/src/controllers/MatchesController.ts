@@ -10,12 +10,12 @@ export default class TeamsController {
 
   public async getAll(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const { inProg } = req.body;
-      if (!inProg) {
+      const { inProgress } = req.query;
+      if (!inProgress) {
         const matches = await this.matchesService.getAll();
         return res.status(200).json(matches);
       }
-      const matchesTrue = await this.matchesService.inProgressMatches(inProg === 'true');
+      const matchesTrue = await this.matchesService.inProgressMatches(inProgress === 'true');
       return res.status(200).json(matchesTrue);
     } catch (error) {
       next(error);

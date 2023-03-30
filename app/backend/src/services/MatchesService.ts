@@ -23,7 +23,7 @@ export default class MacthesService {
     return matches;
   }
 
-  public async inProgressMatches(inProg: boolean) {
+  public async inProgressMatches(inProgress: boolean) {
     const inProgressMat = await this.model.findAll({
       include: [
         {
@@ -33,7 +33,7 @@ export default class MacthesService {
           model: Teams, as: 'awayTeam', attributes: ['teamName'],
         },
       ],
-      where: { inProg },
+      where: { inProgress },
     });
     return inProgressMat;
   }
