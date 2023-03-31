@@ -1,5 +1,6 @@
 import { ModelStatic } from 'sequelize';
 import Teams from '../database/models/TeamsModel';
+import { IUpdate } from '../interfaces/IUpdate';
 // import { IMatches } from '../interfaces/IMatches';
 // import { IMatchesService } from '../interfaces/IMatchesService';
 // referencia: https://sequelize.org/docs/v6/other-topics/typescript/
@@ -45,4 +46,16 @@ export default class MacthesService {
     );
     return finishMat;
   }
+
+  public async update(id: number, up: IUpdate) {
+    const updateMat = await this.model.update(
+      { homeTeamGoals: up.homeTeamGoals, awayTeamGoals: up.awayTeamGoals },
+      { where: { id } },
+    );
+    return updateMat;
+  }
+
+  // public async create(createdMat: ICreateMacthes) {
+
+  // }
 }

@@ -37,4 +37,22 @@ export default class TeamsController {
       next(error);
     }
   }
+
+  public async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const { homeTeamGoals, awayTeamGoals } = req.body;
+
+      const updateMat = await this.matchesService
+        .update(Number(id), { homeTeamGoals, awayTeamGoals });
+
+      if (!updateMat) {
+        return res.status(401).json({ message: 'id not found' });
+      }
+
+      return res.status(200).json({ message: 'successfully updated' });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
