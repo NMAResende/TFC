@@ -55,4 +55,25 @@ export default class TeamsController {
       next(error);
     }
   }
+
+  public async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const newMat = req.body;
+
+      if (newMat.homeTeamId === newMat.awayTeamId) {
+        return res.status(422).json({ message: 'Team IDs cannot be the same' });
+      }
+
+      const newMatche = await this.matchesService
+        .create(newMat);
+
+      if (!newMatche) {
+        return res.status(401).json({ message: 'id not found for create' });
+      }
+
+      return res.status(200).json(newMatche);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

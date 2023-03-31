@@ -1,8 +1,6 @@
 import { ModelStatic } from 'sequelize';
 import Teams from '../database/models/TeamsModel';
 import { IUpdate } from '../interfaces/IUpdate';
-// import { IMatches } from '../interfaces/IMatches';
-// import { IMatchesService } from '../interfaces/IMatchesService';
 // referencia: https://sequelize.org/docs/v6/other-topics/typescript/
 import Matches from '../database/models/MatchesModel';
 
@@ -55,7 +53,16 @@ export default class MacthesService {
     return updateMat;
   }
 
-  // public async create(createdMat: ICreateMacthes) {
+  public async create(newMat: Matches) {
+    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = newMat;
+    // preciso pegar o id de cada time
+    const homeTeam = await this.model.findByPk(Number(newMat.homeTeamId));
+    const awayTeam = await this.model.findByPk(Number(newMat.awayTeamId));
 
-  // }
+    if (homeTeam && awayTeam) {
+      const newMatche = await this.model.create({
+        homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals, inProgress: true });
+      return newMatche;
+    }
+  }
 }
