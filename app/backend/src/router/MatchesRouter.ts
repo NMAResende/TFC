@@ -11,8 +11,12 @@ const matchesRouter = Router();
 matchesRouter.get('/', (req: Request, res: Response, next: NextFunction) =>
   matchesController.getAll(req, res, next));
 
-matchesRouter.post('/', (req: Request, res: Response, next: NextFunction) =>
-  matchesController.create(req, res, next));
+matchesRouter.post(
+  '/',
+  validateToken,
+  (req: Request, res: Response, next: NextFunction) =>
+    matchesController.create(req, res, next),
+);
 
 matchesRouter.patch(
   '/:id',
