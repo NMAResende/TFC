@@ -71,7 +71,7 @@ export default class TeamsController {
         return res.status(401).json({ message: 'id not found for create' });
       }
 
-      return res.status(200).json(newMatche);
+      return res.status(201).json(newMatche);
     } catch (error) {
       next(error);
     }
