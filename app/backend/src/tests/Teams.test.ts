@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Testando a rota GET /teams', () => {
+describe('Testando a rota GET /teams, com sucesso', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
@@ -52,3 +52,26 @@ describe('Testando a rota GET /teams', () => {
     expect(chaiHttpResponse.body).to.be.deep.equal(teamsMocks[0]);
   });
 });
+
+describe('Testando /teams, em caso de falha', () => {
+
+  let chaiHttpResponse: Response;
+
+  before(async () => {
+    sinon
+      .stub(Teams, "findByPk")
+      .resolves(null);
+  });
+
+  afterEach(()=>{
+    (sinon.restore());
+  });
+
+  it('Testando caso não haja um team, onde deve retornar um status 400 e uma mensagem de erro', async () => {
+    chaiHttpResponse = await chai
+       .request(app).get('/teams/56');
+
+    expect(chaiHttpResponse.status).to.be.equal(400);
+    expect(chaiHttpResponse.body.message).to.be.equal('Team not Found!');
+   });
+  });
