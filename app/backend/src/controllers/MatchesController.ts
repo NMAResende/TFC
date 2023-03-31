@@ -61,14 +61,15 @@ export default class TeamsController {
       const newMat = req.body;
 
       if (newMat.homeTeamId === newMat.awayTeamId) {
-        return res.status(422).json({ message: 'Team IDs cannot be the same' });
+        return res.status(422)
+          .json({ message: 'It is not possible to create a match with two equal teams' });
       }
 
       const newMatche = await this.matchesService
         .create(newMat);
 
       if (!newMatche) {
-        return res.status(401).json({ message: 'id not found for create' });
+        return res.status(404).json({ message: 'There is no team with such id!' });
       }
 
       return res.status(201).json(newMatche);
