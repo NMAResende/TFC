@@ -17,4 +17,14 @@ export default class LeaderboardController {
       next(error);
     }
   }
+
+  public async getAllTeamAway(_req: Request, res: Response, next: NextFunction):
+  Promise<Response | void> {
+    try {
+      const leaderboard = await this.leaderboardService.getAllTeamAway();
+      return res.status(200).json(leaderboard);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
