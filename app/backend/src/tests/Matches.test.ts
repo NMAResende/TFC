@@ -34,7 +34,7 @@ describe('Testando a rota /matches, com sucesso', () => {
     chaiHttpResponse = await chai
        .request(app).get('/matches').set(
         'authorization',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJBZG1pbiIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiaWF0IjoxNjgwMjk1MjY0LCJleHAiOjE2ODA5MDAwNjR9.TaY15B9J8nXC4DP3Ff5Bgvyuz0Yfi4v3GjbE9i01kng'
+        'fake_token'
       );
 
     expect(chaiHttpResponse.status).to.be.equal(200);
@@ -45,7 +45,7 @@ describe('Testando a rota /matches, com sucesso', () => {
    
     sinon
         .stub(Matches, "findAll")
-        .resolves(mockMatches as unknown as Matches[]);
+        .resolves(mockInProgressTrue as unknown as Matches[]);
     sinon.stub(jsonwebtoken, 'verify').resolves();
   
     chaiHttpResponse = await chai
@@ -62,7 +62,7 @@ describe('Testando a rota /matches, com sucesso', () => {
     
     sinon
         .stub(Matches, "findAll")
-        .resolves(mockMatches as unknown as Matches[]);
+        .resolves(mockInProgressFalse as unknown as Matches[]);
     sinon.stub(jsonwebtoken, 'verify').resolves();
     
     chaiHttpResponse = await chai
@@ -76,17 +76,15 @@ describe('Testando a rota /matches, com sucesso', () => {
   });
 
   it('Testando /macthes/:id/finish, onde deve retornar as partidas finalizadas e enviar um status 200', async () => {
-    
-   
     sinon
         .stub(Matches, "update")
-        .resolves();
-    sinon.stub(jsonwebtoken, 'verify').resolves();
+        .resolves([ 1 ]);
+    sinon.stub(jsonwebtoken, 'verify').returns();
 
     chaiHttpResponse = await chai
        .request(app).patch('/matches/1/finish').set(
         'authorization',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJBZG1pbiIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiaWF0IjoxNjgwMjk1MjY0LCJleHAiOjE2ODA5MDAwNjR9.TaY15B9J8nXC4DP3Ff5Bgvyuz0Yfi4v3GjbE9i01kng'
+        'fake_token'
       );
 
     expect(chaiHttpResponse.status).to.be.equal(200);
@@ -105,8 +103,8 @@ describe('Testando /matches, para editar as partidas', () => {
   it('Testando criação de uma partida, onde deve retornar um status 200 e uma mensagem de sucesso', async () => {
     sinon
     .stub(Matches, "update")
-    .resolves();
-    sinon.stub(jsonwebtoken, 'verify').resolves();
+    .resolves([ 1 ]);
+    sinon.stub(jsonwebtoken, 'verify').returns();
     
     chaiHttpResponse = await chai
        .request(app).patch('/matches/1').set('authorization', 
